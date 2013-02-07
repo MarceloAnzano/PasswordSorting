@@ -1,41 +1,48 @@
 #include <iostream>
-#include <fstream>
 #include<string>
-#include<sstream>
-#include "InsertionSort.h"
+#include<cstdlib>
+#include "Functions.h"
+#include "Sorts.h"
 
 using namespace std;
 
 int main()
 {
-    InsertionSort iSort;
-    int c = 0, n=100;
-    string passwords[100];
-    string line;
-    fstream myfile;
-    myfile.open("top_passwords.txt");
-    while(myfile.good())
-    {
-        getline(myfile,line);
-        passwords[c]=line;
-        c++;
-    }
+    Functions txt;
+    Sorts sorting;
+    char choice = '0';
+    int n=100;
+    string passwords[n];
 
-    //Laman ng Array
-    /*for(c = 0; c<n; c++)
-    {
-        cout<<passwords[c]<<endl;
-    }*/
+    txt.readTxt(passwords);
 
+    again:
+    choice = txt.initialize();
+
+    if(choice=='a')
+    {
+    cout<<"-----------";
     cout<<"\n\n\nSorting\n";
-    iSort.insertion_sort(passwords, n);
-
-    //Laman ng Sorted Array
-    for(c = 0; c<n; c++)
-    {
-        cout<<passwords[c]<<endl;
+    sorting.insertion_sort(passwords, n);
     }
-    myfile.close();
+    else if (choice=='b')
+    {
+    cout<<"-----------";
+    cout<<"\n\nSorting...\n\n";
+    sorting.bubble_sort(passwords, n);
+    }
+    else
+    {
+        cout<<"Wrong choice. Try again."<<endl;
+        cin.clear();
+        cin.sync();
+        system("PAUSE");
+        system("CLS");
+        goto again;
+    }
+
+    txt.print(passwords, n);
+
 
     return 0;
 }
